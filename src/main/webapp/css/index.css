@@ -1,0 +1,80 @@
+/* General body and typography styles */
+body {
+    font-family: 'Roboto', sans-serif; /* Ensure consistent font usage */
+    background-color: #f4f4f4; /* Light background for better readability */
+    color: #333; /* Dark text for contrast */
+    line-height: 1.5; /* Improve readability */
+}
+
+/* Header styling */
+header {
+    background-color: #333; /* Dark background for header */
+    color: #fff; /* White text on dark background */
+    padding: 1rem; /* Comfortable padding around content */
+    text-align: center; /* Centered title and links */
+}
+
+/* Navigation and action link styling */
+header a, .action-buttons a {
+    color: #fff; /* Ensure links are white for visibility */
+    text-decoration: none; /* Remove underline from links */
+    padding: 0.5rem 1rem; /* Padding for better touch targets */
+    margin: 0 0.5rem; /* Spacing between links */
+    display: inline-block; /* Support padding and margins */
+    border-radius: 0.375rem; /* Rounded corners */
+}
+
+/* Hover effects for interactivity */
+header a:hover, .action-buttons a:hover {
+    background-color: #444; /* Slightly lighter black on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+/* Form and table styling for content sections */
+form, table {
+    width: 90%; /* Optimal width for readability */
+    margin: 2rem auto; /* Center forms and tables horizontally */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+/* Table column styling */
+th, td {
+    text-align: left; /* Align text to the left for readability */
+    padding: 8px; /* Adequate padding for content separation */
+    border-bottom: 1px solid #ddd; /* Light line for separating rows */
+}
+
+/* Ensure that custom styles have higher specificity than Tailwind CSS */
+.action-buttons {
+    display: flex;
+    justify-content: start;
+    gap: 20px; /* Increase the gap to ensure buttons do not touch */
+    align-items: center; /* Vertically align buttons for consistent visual alignment */
+}
+
+.edit-button, .delete-button {
+    flex: none; /* Do not allow flexbox to resize the buttons */
+    margin: 0; /* Remove any margin that might be affecting layout */
+    padding: 0.5rem 1rem; /* Ensure padding is sufficient but not excessive */
+    white-space: nowrap; /* Prevents the button text from wrapping */
+}
+
+/* Make sure buttons are displayed inline and remove any form-specific margins */
+form.delete-form {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    header, form, table {
+        width: 100%; /* Full width on smaller screens */
+        margin: 1rem auto; /* Adjust margin for smaller screens */
+    }
+
+    .action-buttons {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+    }
+}
