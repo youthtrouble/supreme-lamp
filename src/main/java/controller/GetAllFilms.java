@@ -37,13 +37,48 @@ public class GetAllFilms extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            List<Film> films = filmDao.getAllFilms(); // Retrieve all films from the database.
-            request.setAttribute("films", films); // Store the list of films in the request attribute.
-            request.getRequestDispatcher("./views/films-list.jsp").forward(request, response); // Forward request and response to the JSP for display.
+            // Retrieve pagination parameters from the request
+            String offsetParam = request.getParameter("offset");
+            String limitParam = request.getParameter("limit");
+
+            // Default values for pagination
+            int offset = 0;
+            int limit = 10;
+
+            // Parse the pagination parameters if they are provided
+            if (offsetParam != null) {
+                try {
+                    offset = Integer.parseInt(offsetParam);
+                } catch (NumberFormatException e) {
+                    request.setAttribute("errorMessage", "Invalid offset format.");
+                    request.getRequestDispatcher("./views/errors.jsp").forward(request, response);
+                    return;
+                }
+            }
+
+            if (limitParam != null) {
+                try {
+                    limit = Integer.parseInt(limitParam);
+                } catch (NumberFormatException e) {
+                    request.setAttribute("errorMessage", "Invalid limit format.");
+                    request.getRequestDispatcher("./views/errors.jsp").forward(request, response);
+                    return;
+                }
+            }
+
+            // Retrieve films with pagination from the database
+            List<Film> films = filmDao.getAllFilms(limit, offset);
+
+            // Store the list of films in the request attribute
+            request.setAttribute("films", films);
+
+            // Forward request and response to the JSP for display
+            request.getRequestDispatcher("./views/films-list.jsp").forward(request, response);
         } catch (Exception e) {
-            // Handle exceptions that occur during the retrieval of films from the database.
+            // Handle exceptions that occur during the retrieval of films from the database
             request.setAttribute("errorMessage", "Database error occurred while retrieving films: " + e.getMessage());
-            request.getRequestDispatcher("./views/errors.jsp").forward(request, response); // Forward to the error page if an exception occurs.
+            request.getRequestDispatcher("./views/errors.jsp").forward(request, response);
         }
     }
+
 }
